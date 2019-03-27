@@ -37,6 +37,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import autoandshare.headvr.activity.VideoActivity
 import kotlinx.coroutines.*
 import org.videolan.medialibrary.media.MediaLibraryItem
 import org.videolan.medialibrary.media.MediaWrapper
@@ -306,7 +307,7 @@ abstract class BaseBrowserFragment : MediaBrowserFragment<BrowserModel>(), IRefr
                         positionInPlaylist = mediaLocations.size - 1
                 }
             }
-        activity?.let { MediaUtils.openList(it, mediaLocations, positionInPlaylist) }
+        activity?.let { VideoActivity.openList(it, mediaLocations, positionInPlaylist, VLCInstance.get(requireContext())) }
     }
 
     override fun enableSearchOption() = !isRootDirectory

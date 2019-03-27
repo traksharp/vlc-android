@@ -6,6 +6,11 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 
 android {
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
+
     packagingOptions {
         exclude 'META-INF/main.kotlin_module'
         pickFirst 'lib/armeabi-v7a/libc++_shared.so'
@@ -210,6 +215,7 @@ dependencies {
     signedReleaseImplementation "org.videolan.android:medialibrary-all:$rootProject.ext.medialibraryVersion"
     implementation project(':api')
     implementation project(':tools')
+    implementation project(':headvr')
 
     // AppCompat
     implementation "androidx.recyclerview:recyclerview:$rootProject.ext.androidxVersion"

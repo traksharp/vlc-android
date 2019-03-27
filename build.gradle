@@ -65,4 +65,5 @@ ext {
 //    7 is ARMv8
 //    8 is x86_64
 //    9 is MIPS64
+    minSdkVersion = 21
 }

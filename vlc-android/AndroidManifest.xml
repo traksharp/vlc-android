@@ -505,6 +505,9 @@
             android:configChanges="orientation|screenSize"
             android:label="@string/ml_wizard_title"
             android:theme="@style/Theme.MaterialComponents.Light.Dialog" />
+        <activity
+            android:name="autoandshare.headvr.activity.VideoActivity"
+            android:screenOrientation="landscape" />
 
         <service android:name=".extensions.ExtensionManagerService" />
         <service android:name=".PlaybackService">
