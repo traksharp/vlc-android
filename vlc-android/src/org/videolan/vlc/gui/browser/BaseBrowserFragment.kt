@@ -38,6 +38,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import autoandshare.headvr.activity.VideoActivity
+import autoandshare.headvr.activity.VlcHelper
 import kotlinx.coroutines.*
 import org.videolan.medialibrary.media.MediaLibraryItem
 import org.videolan.medialibrary.media.MediaWrapper
@@ -307,7 +308,7 @@ abstract class BaseBrowserFragment : MediaBrowserFragment<BrowserModel>(), IRefr
                         positionInPlaylist = mediaLocations.size - 1
                 }
             }
-        activity?.let { VideoActivity.openList(it, mediaLocations, positionInPlaylist, VLCInstance.get(requireContext())) }
+        activity?.let { VlcHelper.openList(mrl, it, mediaLocations, positionInPlaylist, VLCInstance.get(requireContext())) }
     }
 
     override fun enableSearchOption() = !isRootDirectory
@@ -440,7 +441,7 @@ abstract class BaseBrowserFragment : MediaBrowserFragment<BrowserModel>(), IRefr
         if (adapter.getItem(position) !is MediaWrapper) return
         val mw = adapter.getItem(position) as MediaWrapper
         when (option) {
-            CTX_PLAY -> MediaUtils.openMedia(activity, mw)
+            CTX_PLAY -> VlcHelper.openMedia(activity, mw, VLCInstance.get(requireContext()))
             CTX_PLAY_ALL -> {
                 mw.removeFlags(MediaWrapper.MEDIA_FORCE_AUDIO)
                 playAll(mw)
