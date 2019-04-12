@@ -390,7 +390,7 @@ abstract class BaseBrowserFragment : MediaBrowserFragment<BrowserModel>(), IRefr
         } else {
             mediaWrapper.removeFlags(MediaWrapper.MEDIA_FORCE_AUDIO)
             if (mediaWrapper.type == MediaWrapper.TYPE_DIR) browse(mediaWrapper, true)
-            else MediaUtils.openMedia(v.context, mediaWrapper)
+            else playAll(mediaWrapper)
         }
     }
 

@@ -132,6 +132,14 @@ public class MainActivity extends ContentActivity implements ExtensionManagerSer
     private void setupNavigationView() {
         mNavigationView = findViewById(R.id.navigation);
         mNavigationView.getMenu().findItem(R.id.nav_history).setVisible(mSettings.getBoolean(PreferencesFragment.PLAYBACK_HISTORY, true));
+        hideNavMenu(R.id.nav_playlists);
+        hideNavMenu(R.id.nav_video);
+        hideNavMenu(R.id.nav_audio);
+        hideNavMenu(R.id.nav_history);
+    }
+
+    private void hideNavMenu(int id) {
+        mNavigationView.getMenu().findItem(id).setVisible(false);
     }
 
     @Override

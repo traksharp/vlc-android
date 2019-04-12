@@ -49,6 +49,15 @@ import org.videolan.vlc.util.Settings;
 
 import videolan.org.commontools.TvChannelUtilsKt;
 
+// HeadVR imports
+import org.videolan.vlc.util.VLCInstance;
+import org.videolan.medialibrary.media.MediaWrapper;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentActivity;
+import autoandshare.headvr.activity.VideoActivity;
+import autoandshare.headvr.activity.VlcHelper;
+
 public class StartActivity extends FragmentActivity {
 
     public final static String TAG = "VLC/StartActivity";
@@ -120,7 +129,19 @@ public class StartActivity extends FragmentActivity {
         final boolean onboarding = !tv && !settings.getBoolean(OnboardingActivityKt.ONBOARDING_DONE_KEY, false);
         // Start Medialibrary from background to workaround Dispatchers.Main causing ANR
         // cf https://github.com/Kotlin/kotlinx.coroutines/issues/878
-        if (!onboarding || !firstRun) {
+
+        if (onboarding) {
+            VlcHelper.verifyPermissions(this);
+            Settings.INSTANCE.getInstance(this)
+                    .edit()
+                    .putBoolean(OnboardingActivityKt.ONBOARDING_DONE_KEY, true)
+                    .putInt(Constants.KEY_MEDIALIBRARY_SCAN, Constants.ML_SCAN_OFF)
+                    .putInt("fragment_id", R.id.nav_directories)
+                    .putInt(Constants.PREF_FIRST_RUN, BuildConfig.VERSION_CODE)
+                    .apply();
+        }
+
+        if (true) {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -141,7 +162,7 @@ public class StartActivity extends FragmentActivity {
 
     private void startPlaybackFromApp(Intent intent) {
         if (intent.getType() != null && intent.getType().startsWith("video"))
-            startActivity(intent.setClass(this, VideoPlayerActivity.class));
+            VlcHelper.openMedia(this, intent, VLCInstance.get(this));
         else MediaUtils.INSTANCE.openMediaNoUi(intent.getData());
         finish();
     }

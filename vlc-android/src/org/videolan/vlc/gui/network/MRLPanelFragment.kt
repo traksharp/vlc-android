@@ -36,6 +36,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import autoandshare.headvr.activity.VlcHelper
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.ObsoleteCoroutinesApi
 import kotlinx.coroutines.channels.actor
@@ -52,6 +53,7 @@ import org.videolan.vlc.media.MediaUtils
 import org.videolan.vlc.util.CTX_ADD_TO_PLAYLIST
 import org.videolan.vlc.util.CTX_APPEND
 import org.videolan.vlc.util.CTX_RENAME
+import org.videolan.vlc.util.VLCInstance
 import org.videolan.vlc.viewmodels.StreamsModel
 
 const val TAG = "VLC/MrlPanelFragment"
@@ -119,7 +121,7 @@ class MRLPanelFragment : DialogFragment(), View.OnKeyListener, TextView.OnEditor
 
     private fun playMedia(mw: MediaWrapper) {
         mw.type = MediaWrapper.TYPE_STREAM
-        MediaUtils.openMedia(activity, mw)
+        VlcHelper.openMedia(activity, mw, VLCInstance.get(requireContext()))
         viewModel.updateHistory()
         activity?.invalidateOptionsMenu()
         UiTools.setKeyboardVisibility(editText, false)
