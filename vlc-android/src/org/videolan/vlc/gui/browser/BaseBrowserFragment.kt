@@ -411,8 +411,7 @@ abstract class BaseBrowserFragment : MediaBrowserFragment<BrowserModel>(), IRefr
         if (mActionMode == null && item.itemType == MediaLibraryItem.TYPE_MEDIA) coroutineScope.launch {
             val mw = item as MediaWrapper
             if (mw.uri.scheme == "content" || mw.uri.scheme == OTG_SCHEME) return@launch
-            var flags = if (!isRootDirectory && this@BaseBrowserFragment is FileBrowserFragment) CTX_DELETE else 0
-            if (!isRootDirectory && this is FileBrowserFragment) flags = flags or CTX_DELETE
+            var flags = 0
             if (mw.type == MediaWrapper.TYPE_DIR) {
                 val isEmpty = viewModel.isFolderEmpty(mw)
                 if (!isEmpty) flags = flags or CTX_PLAY
@@ -425,7 +424,7 @@ abstract class BaseBrowserFragment : MediaBrowserFragment<BrowserModel>(), IRefr
                         else flags or CTX_FAV_REMOVE
                     } else flags or CTX_FAV_ADD
                 }
-            } else {
+            } else if (false){
                 val isVideo = mw.type == MediaWrapper.TYPE_VIDEO
                 val isAudio = mw.type == MediaWrapper.TYPE_AUDIO
                 val isMedia = isVideo || isAudio
