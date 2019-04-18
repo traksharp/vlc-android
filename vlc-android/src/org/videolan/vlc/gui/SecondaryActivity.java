@@ -46,6 +46,8 @@ import org.videolan.vlc.util.AndroidDevices;
 
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
+import autoandshare.headvr.activity.AboutFragment;
+import autoandshare.headvr.activity.SettingFragment;
 
 public class SecondaryActivity extends ContentActivity {
     public final static String TAG = "VLC/SecondaryActivity";
@@ -56,6 +58,7 @@ public class SecondaryActivity extends ContentActivity {
 
     public static final String ALBUMS_SONGS = "albumsSongs";
     public static final String ABOUT = "about";
+    public static final String SETTING = "setting";
     public static final String VIDEO_GROUP_LIST = "videoGroupList";
     public static final String STORAGE_BROWSER = "storage_browser";
 
@@ -136,6 +139,9 @@ public class SecondaryActivity extends ContentActivity {
                 break;
             case ABOUT:
                 mFragment = new AboutFragment();
+                break;
+            case SETTING:
+                mFragment = new SettingFragment();
                 break;
             case VIDEO_GROUP_LIST:
                 mFragment = new VideoGridFragment();

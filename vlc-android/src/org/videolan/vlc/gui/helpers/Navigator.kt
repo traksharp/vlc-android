@@ -63,7 +63,7 @@ class Navigator(private val activity: MainActivity,
                 target: Int
 ): com.google.android.material.navigation.NavigationView.OnNavigationItemSelectedListener, LifecycleObserver {
 
-    private val defaultFragmentId= R.id.nav_video
+    private val defaultFragmentId= R.id.nav_directories
     var currentFragmentId = target
     var currentFragment: Fragment? = null
         private set
@@ -184,7 +184,7 @@ class Navigator(private val activity: MainActivity,
                 }
             } else when (id) {
                     R.id.nav_about -> showSecondaryFragment(SecondaryActivity.ABOUT)
-                    R.id.nav_settings -> activity.startActivityForResult(Intent(activity, PreferencesActivity::class.java), ACTIVITY_RESULT_PREFERENCES)
+                    R.id.nav_settings -> showSecondaryFragment(SecondaryActivity.SETTING)
                     R.id.nav_mrl -> MRLPanelFragment().show(activity.supportFragmentManager, "fragment_mrl")
                     else -> {
                         activity.slideDownAudioPlayer()
