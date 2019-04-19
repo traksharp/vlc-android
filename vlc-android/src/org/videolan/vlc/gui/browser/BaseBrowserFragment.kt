@@ -298,17 +298,22 @@ abstract class BaseBrowserFragment : MediaBrowserFragment<BrowserModel>(), IRefr
     }
 
     private fun playAll(mw: MediaWrapper?) {
-        var positionInPlaylist = 0
+        if (mw?.type == MediaWrapper.TYPE_PLAYLIST) {
+            VlcHelper.openMedia(activity, mw, VLCInstance.get(requireContext()));
+        }
+        var positionInPlaylist = -1
         val mediaLocations = LinkedList<MediaWrapper>()
         for (file in viewModel.dataset.value)
             if (file is MediaWrapper) {
-                if (file.type == MediaWrapper.TYPE_VIDEO || file.type == MediaWrapper.TYPE_AUDIO) {
+                if (file.type == MediaWrapper.TYPE_VIDEO) {
                     mediaLocations.add(file)
                     if (mw != null && file.equals(mw))
                         positionInPlaylist = mediaLocations.size - 1
                 }
             }
-        activity?.let { VlcHelper.openList(mrl, it, mediaLocations, positionInPlaylist, VLCInstance.get(requireContext())) }
+        if (mw == null || (positionInPlaylist != -1)) {
+            activity?.let { VlcHelper.openList(mrl, it, mediaLocations, positionInPlaylist, VLCInstance.get(requireContext())) }
+        }
     }
 
     override fun enableSearchOption() = !isRootDirectory
