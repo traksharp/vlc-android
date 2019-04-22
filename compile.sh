@@ -237,6 +237,15 @@ fi
 if [ "$GRADLE_SETUP" = 1 ]; then
     exit 0
 fi
+#######################
+# Fetch headvr source #
+#######################
+if [ ! -d "headvr" ]; then
+    diagnostic "headvr source not found, cloning"
+    git clone https://github.com/autoandshare/HeadVR.git headvr
+    checkfail "headvr source: git clone failed"
+fi
+diagnostic "headvr source found"
 ####################
 # Fetch VLC source #
 ####################
