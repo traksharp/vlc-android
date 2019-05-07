@@ -258,6 +258,11 @@ if [ ! -d "vlc" ]; then
 fi
 diagnostic "VLC source found"
 cd vlc
+
+# update vlc code
+diagnostic "Updating vlc code"
+git fetch -q origin master &&
+
 if ! git cat-file -e ${TESTED_HASH}; then
     cat 1>&2 << EOF
 ***
