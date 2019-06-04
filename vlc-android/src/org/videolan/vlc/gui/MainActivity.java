@@ -112,16 +112,14 @@ public class MainActivity extends ContentActivity implements ExtensionManagerSer
                         mDrawerLayout.openDrawer(mNavigationView);
                     }
                 }, 500);
+                mActivityHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mNavigator.showSecondaryFragment(SecondaryActivity.ABOUT, null);
+                    }
+                }, 500);
             }
             Permissions.checkReadStoragePermission(MainActivity.this, false);
-        }
-        if (getIntent().getBooleanExtra(Constants.EXTRA_UPGRADE, false)) {
-            mActivityHandler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mNavigator.showSecondaryFragment(SecondaryActivity.ABOUT, null);
-                }
-            }, 500);
         }
 
         /* Set up the action bar */
