@@ -508,6 +508,7 @@
             android:theme="@style/Theme.MaterialComponents.Light.Dialog" />
         <activity
             android:name="autoandshare.headvr.activity.VideoActivity"
+            android:configChanges="orientation|screenSize"
             android:screenOrientation="landscape" />
 
         <service android:name=".extensions.ExtensionManagerService" />
