@@ -34,6 +34,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
+import autoandshare.headvr.activity.VlcHelper
 import kotlinx.coroutines.*
 import org.videolan.libvlc.util.AndroidUtil
 import org.videolan.medialibrary.MLServiceLocator
@@ -218,7 +219,7 @@ class StartActivity : FragmentActivity() {
         }
         if (Permissions.canReadStorage(applicationContext) || getStoragePermission()) when {
             intent.type?.startsWith("video") == true -> try {
-                startActivity(intent.setClass(this@StartActivity, VideoPlayerActivity::class.java).apply { putExtra(VideoPlayerActivity.FROM_EXTERNAL, true) })
+                VlcHelper.openMedia(this@StartActivity, intent);
             } catch (ex: SecurityException) {
                 intent.data?.let { MediaUtils.openMediaNoUi(it) }
             }

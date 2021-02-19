@@ -31,12 +31,12 @@ allprojects {
 }
 
 ext {
-    appId = "org.videolan.vlc"
+    appId = "autoandshare.headvr"
     versionName = '3.4.0'
     versionCode = 3040000
     libvlcVersion = '3.4.0'
     medialibraryVersion = '0.9.0'
-    minSdkVersion = 17
+    minSdkVersion = 21
     targetSdkVersion = 29
     compileSdkVersion = 29
     androidxLegacyVersion = '1.0.0'

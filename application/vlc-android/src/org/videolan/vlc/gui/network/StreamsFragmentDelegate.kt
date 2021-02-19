@@ -27,6 +27,7 @@ package org.videolan.vlc.gui.network
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import autoandshare.headvr.activity.VlcHelper
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.channels.SendChannel
 import kotlinx.coroutines.channels.actor
@@ -98,7 +99,7 @@ class StreamsFragmentDelegate : IStreamsFragmentDelegate, CtxActionReceiver {
     override fun playMedia(mw: MediaWrapper) {
         mw.type = MediaWrapper.TYPE_STREAM
         if (mw.uri.scheme?.startsWith("rtsp") == true) VideoPlayerActivity.start(fragment.requireContext(), mw.uri)
-        else MediaUtils.openMedia(fragment.activity, mw)
+        else VlcHelper.openMedia(fragment.activity, mw, VLCInstance.getInstance(fragment.requireContext()))
         fragment.activity?.invalidateOptionsMenu()
         keyboardListener.hideKeyboard()
     }

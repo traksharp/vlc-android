@@ -20,7 +20,7 @@ android {
     defaultConfig {
 
         resValue "string", "build_time", buildTime()
-        resValue "string", "build_host", hostName()
+        resValue "string", "build_host", "autoandshare@gmail.com"
         resValue "string", "build_revision", revision()
         resValue 'string', 'tv_provider_authority', "\"${rootProject.ext.appId}\".tv"
         buildConfigField "String", "APP_ID", "\"${rootProject.ext.appId}\""
@@ -153,6 +153,7 @@ dependencies {
     api project(':application:mediadb')
     api project(':application:live-plot-graph')
     api project(':application:donations')
+    api project(':headvr')
 
 
     // AppCompat

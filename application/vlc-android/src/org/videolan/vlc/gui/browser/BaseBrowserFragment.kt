@@ -68,6 +68,7 @@ import org.videolan.vlc.util.Permissions
 import org.videolan.vlc.util.isSchemeSupported
 import org.videolan.vlc.viewmodels.browser.BrowserModel
 import java.util.*
+import autoandshare.headvr.activity.VlcHelper
 
 private const val TAG = "VLC/BaseBrowserFragment"
 
@@ -367,21 +368,25 @@ abstract class BaseBrowserFragment : MediaBrowserFragment<BrowserModel>(), IRefr
     }
 
     private fun playAll(mw: MediaWrapper?) {
+        if (mw?.type == MediaWrapper.TYPE_PLAYLIST) {
+            VlcHelper.openMedia(activity, mw, VLCInstance.getInstance(requireContext()));
+            return
+        }
         lifecycleScope.launch {
-            var positionInPlaylist = 0
+            var positionInPlaylist = -1
             val mediaLocations = LinkedList<MediaWrapper>()
             handler.sendEmptyMessageDelayed(MSG_SHOW_ENQUEUING, 1000)
             withContext(Dispatchers.IO) {
                 val files = if (viewModel.url?.startsWith("file") == true) viewModel.provider.browseUrl(viewModel.url!!) else viewModel.dataset.getList()
                 for (file in files.filterIsInstance(MediaWrapper::class.java))
-                    if (file.type == MediaWrapper.TYPE_VIDEO || file.type == MediaWrapper.TYPE_AUDIO) {
+                    if (file.type == MediaWrapper.TYPE_VIDEO) {
                         mediaLocations.add(file)
                         if (mw != null && file.equals(mw))
                             positionInPlaylist = mediaLocations.size - 1
                     }
             }
             handler.sendEmptyMessage(MSG_HIDE_ENQUEUING)
-            activity?.let { MediaUtils.openList(it, mediaLocations, positionInPlaylist) }
+            activity?.let { VlcHelper.openList(mrl, it, mediaLocations, positionInPlaylist, VLCInstance.getInstance(requireContext())) }
         }
     }
 
@@ -501,7 +506,7 @@ abstract class BaseBrowserFragment : MediaBrowserFragment<BrowserModel>(), IRefr
         } else {
             mediaWrapper.removeFlags(MediaWrapper.MEDIA_FORCE_AUDIO)
             if (mediaWrapper.type == MediaWrapper.TYPE_DIR) browse(mediaWrapper, true)
-            else MediaUtils.openMedia(v.context, mediaWrapper)
+            else playAll(mediaWrapper)
         }
     }
 
@@ -560,7 +565,7 @@ abstract class BaseBrowserFragment : MediaBrowserFragment<BrowserModel>(), IRefr
         val mw = adapter.getItem(position) as? MediaWrapper
                 ?: return
         when (option) {
-            CTX_PLAY -> MediaUtils.openMedia(activity, mw)
+            CTX_PLAY -> VlcHelper.openMedia(activity, mw, VLCInstance.getInstance(requireContext()))
             CTX_PLAY_ALL -> {
                 mw.removeFlags(MediaWrapper.MEDIA_FORCE_AUDIO)
                 playAll(mw)
