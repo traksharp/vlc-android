@@ -31,6 +31,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import androidx.core.content.ContextCompat
+import androidx.core.content.edit
 import androidx.core.net.toUri
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
@@ -184,9 +185,19 @@ class StartActivity : FragmentActivity() {
     private fun startApplication(tv: Boolean, firstRun: Boolean, upgrade: Boolean, target: Int, removeDevices:Boolean = false) {
         val settings = Settings.getInstance(this@StartActivity)
         val onboarding = !tv && !settings.getBoolean(ONBOARDING_DONE_KEY, false)
+
+        VlcHelper.verifyPermissions(this);
+        if (onboarding) {
+            Settings.getInstance(this).edit {
+                putInt(PREF_FIRST_RUN, BuildConfig.VLC_VERSION_CODE)
+                putBoolean(ONBOARDING_DONE_KEY, true)
+                putInt(KEY_MEDIALIBRARY_SCAN, ML_SCAN_OFF)
+                putInt("fragment_id", R.id.nav_directories)
+            }
+        }
         // Start Medialibrary from background to workaround Dispatchers.Main causing ANR
         // cf https://github.com/Kotlin/kotlinx.coroutines/issues/878
-        if (!onboarding || !firstRun) {
+        if (true) {
             Thread {
                 AppScope.launch {
                     // workaround for a Android 9 bug
