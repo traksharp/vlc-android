@@ -30,11 +30,14 @@ import android.view.MenuItem
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.edit
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
+import autoandshare.headvr.activity.AboutFragment
+import autoandshare.headvr.activity.SettingFragment
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -86,7 +89,15 @@ class Navigator : BottomNavigationView.OnNavigationItemSelectedListener, Lifecyc
         }
         lifecycle.addObserver(this@Navigator)
         navigationView = findViewById(R.id.navigation)
+        hideNavMenu()
         appbarLayout = findViewById(R.id.appbar)
+        appbarLayout.isVisible = false
+    }
+
+    fun hideNavMenu() {
+        for (id in arrayOf(R.id.nav_video, R.id.nav_audio)) {
+            navigationView.menu.findItem(id).isVisible = false
+        }
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
@@ -113,8 +124,8 @@ class Navigator : BottomNavigationView.OnNavigationItemSelectedListener, Lifecyc
         return when (id) {
             R.id.nav_audio -> AudioBrowserFragment()
             R.id.nav_directories -> MainBrowserFragment()
-            R.id.nav_playlists -> PlaylistFragment()
-            R.id.nav_more -> MoreFragment()
+            R.id.nav_playlists -> SettingFragment()
+            R.id.nav_more -> AboutFragment()
             else -> VideoGridFragment()
         }
     }
