@@ -105,7 +105,7 @@ android {
     }
 
     sourceSets.release {
-        manifest.srcFile 'flavors/release/AndroidManifest.xml'
+        //manifest.srcFile 'flavors/release/AndroidManifest.xml'
     }
     sourceSets.signedRelease {
         manifest.srcFile 'flavors/release/AndroidManifest.xml'
