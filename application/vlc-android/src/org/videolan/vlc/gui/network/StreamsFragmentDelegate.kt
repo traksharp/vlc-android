@@ -99,7 +99,7 @@ class StreamsFragmentDelegate : IStreamsFragmentDelegate, CtxActionReceiver {
     override fun playMedia(mw: MediaWrapper) {
         mw.type = MediaWrapper.TYPE_STREAM
         if (mw.uri.scheme?.startsWith("rtsp") == true) VideoPlayerActivity.start(fragment.requireContext(), mw.uri)
-        else VlcHelper.openMedia(fragment.activity, mw, VLCInstance.getInstance(fragment.requireContext()))
+        else VlcHelper.openMedia(fragment.activity, mw)
         fragment.activity?.invalidateOptionsMenu()
         keyboardListener.hideKeyboard()
     }

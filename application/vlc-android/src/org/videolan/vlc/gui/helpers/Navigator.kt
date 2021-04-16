@@ -38,6 +38,7 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import autoandshare.headvr.activity.AboutFragment
 import autoandshare.headvr.activity.SettingFragment
+import autoandshare.headvr.activity.StreamFragment
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -95,7 +96,7 @@ class Navigator : BottomNavigationView.OnNavigationItemSelectedListener, Lifecyc
     }
 
     fun hideNavMenu() {
-        for (id in arrayOf(R.id.nav_video, R.id.nav_audio)) {
+        for (id in arrayOf(R.id.nav_audio)) {
             navigationView.menu.findItem(id).isVisible = false
         }
     }
@@ -123,6 +124,7 @@ class Navigator : BottomNavigationView.OnNavigationItemSelectedListener, Lifecyc
     private fun getNewFragment(id: Int): Fragment {
         return when (id) {
             R.id.nav_audio -> AudioBrowserFragment()
+            R.id.nav_video -> StreamFragment()
             R.id.nav_directories -> MainBrowserFragment()
             R.id.nav_playlists -> SettingFragment()
             R.id.nav_more -> AboutFragment()
