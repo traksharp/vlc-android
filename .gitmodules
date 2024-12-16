@@ -1,0 +1,3 @@
+[submodule "headvr"]
+	path = headvr
+	url = git@github.com:traksharp/HeadVR.git

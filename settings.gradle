@@ -3,3 +3,4 @@ include ':application:tools', ':application:resources', ':application:mediadb', 
 include ':application:vlc-android'
 include ':application:moviepedia'
 include ':headvr'
+include ':headvr:gvr-android-sdk'
